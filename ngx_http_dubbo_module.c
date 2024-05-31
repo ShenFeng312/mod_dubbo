@@ -322,6 +322,12 @@ ngx_http_dubbo_handler(ngx_http_request_t *r)
 
     u->conf = &dlcf->upstream;
 
+#if (HAVE_NGX_UPSTREAM_TIMEOUT_FIELDS)
+    u->read_timeout = u->conf->read_timeout;
+    u->connect_timeout = u->conf->connect_timeout;
+    u->send_timeout = u->conf->send_timeout;
+#endif
+
     if (ngx_http_set_content_type(r) != NGX_OK) {
         return NGX_HTTP_INTERNAL_SERVER_ERROR;
     }
